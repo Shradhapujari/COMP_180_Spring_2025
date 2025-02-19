@@ -1,0 +1,49 @@
+
+#pragma once
+#include <vector>
+#include<iostream>
+using namespace std;
+int CV;
+int Current_value(char R) {
+	CV *= 10;
+	CV += (R - '0');
+	return CV;
+}
+int ProcessQueue(int total, int current, char oper) {
+	if (oper == '+') {
+		return total + current;
+	}
+	else if (oper == '-') {
+		return total - current;
+	}
+	else if (oper == '*') {
+		return total * current;
+	}
+	else if (oper == '/') {
+		return total / current;
+	}
+	else if (oper == '=') {
+		if (current != 0) {
+			return total = current;
+	}
+	else {
+		return total = current;
+	}
+}
+int main()
+{
+	int TV = 0; int CV = 0; char Opq = ' ';
+	char input = ' ';
+	do {
+		cout << "Total value = " << TV << endl; cout << "Current Value = " << CV << endl; cout << "Valid Operators : +,-,*,/" << endl;
+		cin >> input;
+		if (input >= '0' && input <= '9') {
+			CV = Current_value(input);
+		}
+		else if (input == '+'|| input == '-' || input == '*' || input == '/' || input == '=') {
+			Opq = input;
+			TV = ProcessQueue(TV, CV, Opq);
+			CV = 0;
+		}
+	} while (input!='q');
+}
