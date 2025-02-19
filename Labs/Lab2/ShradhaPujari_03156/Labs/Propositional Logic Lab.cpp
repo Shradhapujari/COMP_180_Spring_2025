@@ -98,7 +98,7 @@ int main() {
             cout << "Error: Enter 3 variables (p, q, r) \n";
         }
         else {
-            cout << "Enter values:\n";
+            cout << "Print Truth Table \n";
             generateTruthTable(expr);
 
         }
@@ -110,5 +110,4 @@ int main() {
 
     return 0;
 }
-
 
