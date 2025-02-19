@@ -10,8 +10,7 @@
 
 using namespace std;
 
-bool evaluateExpression(const string& expr, const unordered_map<char, bool>& values, size_t& pos) 
-{
+bool evaluateExpression(const string& expr, const unordered_map<char, bool>& values, size_t& pos) {
     if (pos >= expr.size()) return false;
 
     char ch = expr[pos];
@@ -38,12 +37,12 @@ bool evaluateExpression(const string& expr, const unordered_map<char, bool>& val
     bool right = evaluateExpression(expr, values, pos);
 
     switch (op) {
-	case '^': return left && right; // and
-	case 'v': return left || right; // or
-    	case 'x': return left != right; // xor
-    	case '>': return !left || right; // implication
-    	case '=': return left == right; // bi-conditional
-    	default: return false;
+    case '^': return left && right; // and
+    case 'v': return left || right; // or
+    case 'x': return left != right; // xor
+    case '>': return !left || right; // implication
+    case '=': return left == right; // bi-conditional
+    default: return false;
     }
 }
 
@@ -61,20 +60,31 @@ void generateTruthTable(const string& expr) {
     for (char var : vars) {
         cout << var << "\t";
     }
-    cout << expr << "\n";
+    cout << expr << "\tp AND q\tp OR q\tp XOR q\tp -> q\tp <-> q\tNOT p\tNOT q\tNOT r\n";
 
-
+    
     for (int i = 0; i < numRows; ++i) {
         unordered_map<char, bool> values;
         for (int j = 0; j < numVars; ++j) {
             values[vars[j]] = i & (1 << (numVars - j - 1));
         }
 
-       
+        
         for (char var : vars) {
             cout << values[var] << "\t";
         }
-        cout << evaluateExpression(expr, values) << "\n";
+        bool p = values['p'];
+        bool q = values['q'];
+        bool r = values['r'];
+        cout << evaluateExpression(expr, values) << "\t"
+            << (p && q) << "\t"
+            << (p || q) << "\t"
+            << (p != q) << "\t"  // xor
+            << (!p || q) << "\t"  // implication
+            << (p == q) << "\t"  // bi-conditional
+            << (!p) << "\t"
+            << (!q) << "\t"
+            << (!r) << "\n";
     }
 }
 
@@ -83,7 +93,7 @@ int main() {
     char input;
 
     do {
-        cout << "Enter a propositional logical statement using variables p, q, r, ^ (AND), v (OR), ~ (NOT), x (XOR), > (Conditional ), = (Bi-Conditional):\n";
+        cout << "Enter a propositional logical statement using variables p, q, r, ^ (AND), v (OR), ~ (NOT), x (XOR), > (Conditional), = (Bi-Conditional):\n";
         getline(cin, expr);
 
         
@@ -95,19 +105,17 @@ int main() {
         }
 
         if (variables.size() != 3) {
-            cout << "Error: Enter 3 variables (p, q, r) \n";
+            cout << "Error: Enter 3 variables (p, q, r)\n";
         }
         else {
-            cout << "Print Truth Table \n";
+            cout << "Print Truth Table\n";
             generateTruthTable(expr);
-
         }
 
         cout << "Do you want to enter another expression? (y/n): ";
         cin >> input;
-        cin.ignore();
+        cin.ignore(); 
     } while (input == 'y');
 
     return 0;
 }
-
