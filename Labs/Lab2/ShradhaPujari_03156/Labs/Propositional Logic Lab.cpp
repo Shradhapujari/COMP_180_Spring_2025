@@ -40,10 +40,10 @@ bool evaluateExpression(const string& expr, const unordered_map<char, bool>& val
     switch (op) {
 	case '^': return left && right; // and
 	case 'v': return left || right; // or
-    case 'x': return left != right; // xor
-    case '>': return !left || right; // implication
-    case '=': return left == right; // bi-conditional
-    default: return false;
+    	case 'x': return left != right; // xor
+    	case '>': return !left || right; // implication
+    	case '=': return left == right; // bi-conditional
+    	default: return false;
     }
 }
 
